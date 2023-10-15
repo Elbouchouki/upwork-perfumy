@@ -63,7 +63,7 @@ const Navbar = () => {
             navItems.map((item, index) => (
               <NavbarItem
                 isActive={pathname === item.href}
-                key={`${item}-${index}`}>
+                key={`${item.name}-${index}`}>
                 <Link href={item.href}
                   className={cn("text-foreground-500", {
                     'text-primary-500': pathname === item.href
@@ -109,7 +109,7 @@ const Navbar = () => {
           onKeyDown={handleKeyDown}
         />
         {navItems.map((item, index) => (
-          <NavbarMenuItem key={`collased-${item}-${index}`}>
+          <NavbarMenuItem key={`collased-${item.name}-${index}`}>
             <Link
               color={pathname === item.href ? 'primary' : 'foreground'}
               className="w-full"

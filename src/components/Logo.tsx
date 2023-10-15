@@ -11,7 +11,7 @@ const Logo = () => {
           Perfumy
         </p>
         <p className="text-xs text-default-500">
-          Australia's Perfumes Search Engine
+          Australia&apos;s Perfumes Search Engine
         </p>
       </div>
     </Link>

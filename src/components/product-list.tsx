@@ -11,16 +11,26 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import ProductCardSkeleton from './product-card-skeleton';
 import { useCustomSearch } from '~/hooks/useCustomSearch';
 import { MdLayersClear } from 'react-icons/md'
+import { Perfum } from '@prisma/client';
 
 
 type PaginationProps = {
   page: number
   pageTotal: number
-  perfums: any
-  handleStateChange: Function
+  perfumsIsLoading?: boolean
+  perfums?: Perfum[]
+  handleStateChange: (data: {
+    _prices?: string
+    _genders?: string[]
+    _stores?: string[]
+    _sort?: string
+    _page?: number
+    _search?: string
+
+  }) => void
 }
 
-const Pagination = ({ handleStateChange, page, pageTotal, perfums }: PaginationProps) => {
+const Pagination = ({ handleStateChange, page, pageTotal, perfumsIsLoading, perfums }: PaginationProps) => {
   return (
     <div className="ml-auto flex gap-2 items-center">
       <Button
@@ -35,9 +45,9 @@ const Pagination = ({ handleStateChange, page, pageTotal, perfums }: PaginationP
         Previous
       </Button>
       {
-        <Skeleton isLoaded={!perfums?.isLoading} disableAnimation >
+        <Skeleton isLoaded={!perfumsIsLoading} disableAnimation >
           {
-            perfums?.data?.length !== 0 && (
+            perfums?.length !== 0 && (
               <p className='text-sm whitespace-nowrap '>
                 {`${page} of ${pageTotal}`}
               </p>
@@ -202,7 +212,7 @@ const ProductList = () => {
               Price: High to Low
             </SelectItem>
           </Select>
-          <Pagination page={page} pageTotal={pageTotal} perfums={perfums} handleStateChange={handleStateChange} />
+          <Pagination page={page} pageTotal={pageTotal} perfums={perfums.data} perfumsIsLoading={perfums.isLoading} handleStateChange={handleStateChange} />
         </div>
         {
           search.length !== 0 && (
@@ -253,7 +263,7 @@ const ProductList = () => {
         </div>
 
         <div className='flex justify-end'>
-          <Pagination page={page} pageTotal={pageTotal} perfums={perfums} handleStateChange={handleStateChange} />
+          <Pagination page={page} pageTotal={pageTotal} perfums={perfums.data} perfumsIsLoading={perfums.isLoading} handleStateChange={handleStateChange} />
         </div>
 
 

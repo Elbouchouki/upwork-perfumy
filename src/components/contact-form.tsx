@@ -21,6 +21,7 @@ const ContactForm = () => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
   })
+
   const handleSubmit = (data: z.infer<typeof FormSchema>) => {
     mutation.mutate({
       name: data.name,
@@ -38,10 +39,10 @@ const ContactForm = () => {
     })
   }
 
-
   return (
     <Form  {...form}>
-      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col w-full gap-3">
+
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col w-full gap-3"> {/* eslint-disable-line */}
         <div>
           <FormField
             control={form.control}
