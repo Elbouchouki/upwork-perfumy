@@ -11,7 +11,7 @@ import { ThemeProvider as NextThemesProvider } from "next-themes";
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <NextUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="dark">
+      <NextThemesProvider attribute="class" defaultTheme="light">
         <Component {...pageProps} />
       </NextThemesProvider>
     </NextUIProvider>
