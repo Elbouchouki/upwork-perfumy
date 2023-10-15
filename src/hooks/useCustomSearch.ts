@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation"
 export const useCustomSearch = () => {
 
   const searchParams = useSearchParams()
-  const prices: string[] = searchParams.get("prices")?.split("|") ?? []
+  const prices: string = searchParams.get("prices") ?? ""
   const genders: string[] = searchParams.get("genders")?.split("|") ?? []
   const stores: string[] = searchParams.get("stores")?.split("|") ?? []
   const sort: string = searchParams.get("sort") ?? "ASC"

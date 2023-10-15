@@ -35,7 +35,7 @@ const Navbar = () => {
         search: searchInput,
         sort: sort,
         genders: genders.filter(f => f.length !== 0).join("|"),
-        prices: prices.filter(f => f.length !== 0).join("|"),
+        prices: prices,
         stores: stores.filter(f => f.length !== 0).join("|"),
         page: page.toString()
       }).toString()}`)

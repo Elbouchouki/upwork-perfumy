@@ -28,8 +28,9 @@ async function main() {
     image: perfum.image,
     gender: perfum.gender,
     store: perfum.store
-  }))
+  })).filter((perfum) => perfum.price > 5)
   await prisma.perfum.deleteMany({})
+  console.log(`seeded ${allPerfums.length} perfums`)
   await seedPerfums(allPerfums)
 }
 

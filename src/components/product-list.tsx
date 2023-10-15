@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxGroup, ScrollShadow, Select, SelectItem, Skeleton } from '@nextui-org/react';
+import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup, ScrollShadow, Select, SelectItem, Skeleton } from '@nextui-org/react';
 import React from 'react'
 import { api } from '~/utils/api';
 import { Accordion, AccordionItem } from "@nextui-org/react";
@@ -21,7 +21,7 @@ const ProductList = () => {
   const totalItems = api.perfum.countPefums.useQuery({
     sort: sort === "ASC" ? "asc" : sort === "DESC" ? "desc" : undefined,
     gender: genders,
-    price: prices,
+    price: [prices],
     store: stores,
     search: search
   })
@@ -32,7 +32,7 @@ const ProductList = () => {
     itemsPerPage,
     sort: sort === "ASC" ? "asc" : sort === "DESC" ? "desc" : undefined,
     gender: genders,
-    price: prices,
+    price: [prices],
     store: stores,
     search: search
   });
@@ -41,7 +41,7 @@ const ProductList = () => {
   const handleStateChange = ({
     _prices, _genders, _stores, _sort, _page, _search
   }: {
-    _prices?: string[]
+    _prices?: string
     _genders?: string[]
     _stores?: string[]
     _sort?: string
@@ -65,12 +65,19 @@ const ProductList = () => {
       search: s,
       sort: (_sort ?? sort),
       genders: (_genders ?? genders).filter(f => f.length !== 0).join("|"),
-      prices: (_prices ?? prices).filter(f => f.length !== 0).join("|"),
+      prices: (_prices ?? prices) || "",
       stores: (_stores ?? stores).filter(f => f.length !== 0).join("|"),
       page: p.toString(),
     })
     router.push(`?${searchParams.toString()}`)
   }
+
+  const clearableFilters = () => {
+    return prices !== "" ||
+      genders.filter(f => f.length !== 0).length !== 0 ||
+      stores.filter(f => f.length !== 0).length !== 0
+  }
+  console.log(clearableFilters())
 
   return (
     <div className='flex flex-col md:flex-row py-4 px-4 sm:gap-3 w-full'>
@@ -78,19 +85,19 @@ const ProductList = () => {
 
         <Accordion selectionMode="single" variant='light'>
           <AccordionItem key="1" aria-label="Price" subtitle="Price" >
-            <CheckboxGroup
+            <RadioGroup
               value={prices}
-              onValueChange={(s: string[]) => handleStateChange({ _prices: s })}
+              onValueChange={(s: string) => handleStateChange({ _prices: s })}
               className='mx-2 mb-3'
             >
               {
                 PRICE_RANGE.map(priceRange => (
-                  <Checkbox value={priceRange.id} key={priceRange.id}>
+                  <Radio value={priceRange.id} key={priceRange.id}>
                     {`${priceRange.min ? priceRange.min + " AUD" : "Under"} - ${priceRange.max ? priceRange.max + " AUD" : "Above"}`}
-                  </Checkbox>
+                  </Radio >
                 ))
               }
-            </CheckboxGroup>
+            </RadioGroup>
           </AccordionItem>
           <AccordionItem key="2" aria-label="Gender" subtitle="Gender">
             <CheckboxGroup
@@ -173,7 +180,7 @@ const ProductList = () => {
               size="sm"
               variant="light"
               color="primary"
-              disabled={page === pageTotal}
+              disabled={page === pageTotal || pageTotal === 0}
               className='disabled:hidden'
               onPress={() => handleStateChange({ _page: page + 1 })}
             >
@@ -195,6 +202,25 @@ const ProductList = () => {
               </Button>
             </div>
           )
+        }
+        {
+          clearableFilters() &&
+          <div>
+            <Button
+              variant='light'
+              size='sm'
+              startContent={<MdLayersClear />}
+              onPress={() => handleStateChange({
+                _search: search,
+                _genders: [],
+                _prices: "",
+                _sort: "",
+                _stores: []
+              })}
+            >
+              clear filters
+            </Button>
+          </div>
         }
         <div className='grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  gap-6 md:gap-4 w-full'>
           {
