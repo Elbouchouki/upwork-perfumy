@@ -153,7 +153,7 @@ const ProductList = () => {
               {
                 PRICE_RANGE.map(priceRange => (
                   <Radio value={priceRange.id} key={priceRange.id}>
-                    {`${priceRange.min ? priceRange.min + " AUD" : "Under"} - ${priceRange.max ? priceRange.max + " AUD" : "Above"}`}
+                    {`${priceRange.min ? "$" + priceRange.min : "Under"} ${!(priceRange.min && priceRange.max) ? " " : " - "} ${priceRange.max ? "$" + priceRange.max : "and Above"}`}
                   </Radio >
                 ))
               }

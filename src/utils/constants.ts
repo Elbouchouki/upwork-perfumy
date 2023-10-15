@@ -4,44 +4,44 @@ export const PRICE_RANGE: PriceRange[] = [
   {
     id: "1",
     min: null,
-    max: 42
+    max: 10
   },
   {
     id: "2",
-    min: 43,
-    max: 83
+    min: 10,
+    max: 24
   },
   {
     id: "3",
-    min: 84,
-    max: 125
+    min: 25,
+    max: 49
   },
   {
     id: "4",
-    min: 126,
-    max: 166
+    min: 50,
+    max: 99
   },
   {
     id: "5",
-    min: 167,
-    max: 249
+    min: 100,
+    max: 119
   },
   {
     id: "6",
-    min: 250,
-    max: 332
+    min: 120,
+    max: 149
   }, {
     id: "7",
-    min: 333,
-    max: 415
+    min: 150,
+    max: 199
   }, {
     id: "8",
-    min: 416,
-    max: 830
+    min: 200,
+    max: 249
   },
   {
     id: "9",
-    min: 831,
+    min: 250,
     max: null
   },
 ]
