@@ -17,7 +17,7 @@ const ProductList = () => {
 
   const { genders, page, prices, sort, stores, search } = useCustomSearch()
 
-  const itemsPerPage: number = 24
+  const itemsPerPage = 24
   const totalItems = api.perfum.countPefums.useQuery({
     sort: sort === "ASC" ? "asc" : sort === "DESC" ? "desc" : undefined,
     gender: genders,
@@ -49,18 +49,27 @@ const ProductList = () => {
     _search?: string
 
   }) => {
-    let p = _page || page
-    if (_prices || _genders || _stores || _sort) {
+    let p = _page ?? page
+    if (_prices ?? _genders ?? _stores ?? _sort) {
       p = 1
     }
-    router.push(`?${new URLSearchParams({
-      search: _search === undefined ? search : _search,
-      sort: (_sort || sort),
-      genders: (_genders || genders).filter(f => f.length !== 0).join("|"),
-      prices: (_prices || prices).filter(f => f.length !== 0).join("|"),
-      stores: (_stores || stores).filter(f => f.length !== 0).join("|"),
+
+    let s = ""
+    if (_search === undefined) {
+      s = search
+    } else {
+      s = _search
+    }
+
+    const searchParams = new URLSearchParams({
+      search: s,
+      sort: (_sort ?? sort),
+      genders: (_genders ?? genders).filter(f => f.length !== 0).join("|"),
+      prices: (_prices ?? prices).filter(f => f.length !== 0).join("|"),
+      stores: (_stores ?? stores).filter(f => f.length !== 0).join("|"),
       page: p.toString(),
-    })}`)
+    })
+    router.push(`?${searchParams.toString()}`)
   }
 
   return (

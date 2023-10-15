@@ -13,8 +13,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Perfumy - Australia's Vape Search Engine</title>
-        <meta name="description" content="Perfumy - Australia's Vape Search Engine" />
+        <title>Perfumy - Australia&apos;s Vape Search Engine</title>
+        <meta name="description" content="Perfumy - Australia&apos;s Vape Search Engine" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="min-h-screen flex flex-col">

@@ -1,7 +1,6 @@
 import React from 'react'
-import { Navbar as _Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, Input } from "@nextui-org/react";
+import { Navbar as _Navbar, NavbarBrand, NavbarContent, Link, Input } from "@nextui-org/react";
 import { GiDelicatePerfume } from "react-icons/gi";
-import { cn } from '~/utils';
 import { usePathname, useRouter } from 'next/navigation';
 import { ThemeSwitcher } from './theme-switcher';
 import { BsSearch } from 'react-icons/bs'
@@ -39,7 +38,7 @@ const Navbar = () => {
         prices: prices.filter(f => f.length !== 0).join("|"),
         stores: stores.filter(f => f.length !== 0).join("|"),
         page: page.toString()
-      })}`)
+      }).toString()}`)
       setInputSearch("")
     }
   }
