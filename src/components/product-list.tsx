@@ -11,6 +11,56 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 import ProductCardSkeleton from './product-card-skeleton';
 import { useCustomSearch } from '~/hooks/useCustomSearch';
 import { MdLayersClear } from 'react-icons/md'
+
+
+type PaginationProps = {
+  page: number
+  pageTotal: number
+  perfums: any
+  handleStateChange: Function
+}
+
+const Pagination = ({ handleStateChange, page, pageTotal, perfums }: PaginationProps) => {
+  return (
+    <div className="ml-auto flex gap-2 items-center">
+      <Button
+        startContent={<BsChevronLeft />}
+        size="sm"
+        variant="light"
+        color="primary"
+        className='disabled:hidden'
+        disabled={page === 1}
+        onPress={() => handleStateChange({ _page: page - 1 })}
+      >
+        Previous
+      </Button>
+      {
+        <Skeleton isLoaded={!perfums?.isLoading} disableAnimation >
+          {
+            perfums?.data?.length !== 0 && (
+              <p className='text-sm whitespace-nowrap '>
+                {`${page} of ${pageTotal}`}
+              </p>
+            )
+          }
+        </Skeleton>
+      }
+      <Button
+        endContent={<BsChevronRight />}
+        size="sm"
+        variant="light"
+        color="primary"
+        disabled={page === pageTotal || pageTotal === 0}
+        className='disabled:hidden'
+        onPress={() => handleStateChange({ _page: page + 1 })}
+      >
+        Next
+      </Button>
+    </div>
+  )
+}
+
+
 const ProductList = () => {
 
   const router = useRouter()
@@ -105,7 +155,7 @@ const ProductList = () => {
               onValueChange={(s: string[]) => handleStateChange({ _genders: s })}
               className='mx-2 mb-3'
             >
-              <Checkbox value="MAN">Man</Checkbox>
+              <Checkbox value="MAN">Men</Checkbox>
               <Checkbox value="WOMEN">Women</Checkbox>
             </CheckboxGroup>
           </AccordionItem>
@@ -152,41 +202,7 @@ const ProductList = () => {
               Price: High to Low
             </SelectItem>
           </Select>
-          <div className="ml-auto flex gap-2 items-center">
-            <Button
-              startContent={<BsChevronLeft />}
-              size="sm"
-              variant="light"
-              color="primary"
-              className='disabled:hidden'
-              disabled={page === 1}
-              onPress={() => handleStateChange({ _page: page - 1 })}
-            >
-              Previous
-            </Button>
-            {
-              <Skeleton isLoaded={!perfums?.isLoading} disableAnimation >
-                {
-                  perfums?.data?.length !== 0 && (
-                    <p className='text-sm whitespace-nowrap '>
-                      {`${page} of ${pageTotal}`}
-                    </p>
-                  )
-                }
-              </Skeleton>
-            }
-            <Button
-              endContent={<BsChevronRight />}
-              size="sm"
-              variant="light"
-              color="primary"
-              disabled={page === pageTotal || pageTotal === 0}
-              className='disabled:hidden'
-              onPress={() => handleStateChange({ _page: page + 1 })}
-            >
-              Next
-            </Button>
-          </div>
+          <Pagination page={page} pageTotal={pageTotal} perfums={perfums} handleStateChange={handleStateChange} />
         </div>
         {
           search.length !== 0 && (
@@ -235,6 +251,12 @@ const ProductList = () => {
               </div>
           }
         </div>
+
+        <div className='flex justify-end'>
+          <Pagination page={page} pageTotal={pageTotal} perfums={perfums} handleStateChange={handleStateChange} />
+        </div>
+
+
       </div>
     </div >
   )

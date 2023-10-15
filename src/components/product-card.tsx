@@ -22,10 +22,10 @@ const ProductCard = ({ perfum, className }: ProductCardProps) => {
         <CardBody className="overflow-visible py-2 flex justify-center items-center my-2">
           <Image
             alt={`Image of ${perfum.title}`}
-            className="object-cover rounded-xl group-hover:scale-105"
+            className="object-cover h-60 w-full rounded-xl group-hover:scale-105"
             src={perfum.image}
-            width={300}
-            height={400}
+          // width={300}
+          // height={300}
           />
         </CardBody>
         <CardFooter className='flex flex-col gap-2 items-start '>

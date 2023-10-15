@@ -1,9 +1,5 @@
 import Head from "next/head";
-
-import { api } from "~/utils/api";
-
-import ProductCard from "~/components/product-card";
-import { ThemeSwitcher } from "~/components/theme-switcher";
+import Footer from "~/components/footer";
 import Navbar from "~/components/navbar";
 import ProductList from "~/components/product-list";
 
@@ -15,11 +11,13 @@ export default function Home() {
       <Head>
         <title>Perfumy - Australia&apos;s Vape Search Engine</title>
         <meta name="description" content="Perfumy - Australia&apos;s Vape Search Engine" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="min-h-screen flex flex-col">
+      <main className="min-h-screen flex flex-col " >
         <Navbar />
         <ProductList />
+        <Footer />
       </main>
     </>
 
