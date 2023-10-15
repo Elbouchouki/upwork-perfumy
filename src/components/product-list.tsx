@@ -1,4 +1,4 @@
-import { Button, Checkbox, CheckboxGroup, Radio, RadioGroup, ScrollShadow, Select, SelectItem, Skeleton } from '@nextui-org/react';
+import { Button, Checkbox, CheckboxGroup, Input, Radio, RadioGroup, ScrollShadow, Select, SelectItem, Skeleton } from '@nextui-org/react';
 import React from 'react'
 import { api } from '~/utils/api';
 import { Accordion, AccordionItem } from "@nextui-org/react";
@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import ProductCard from './product-card';
 
 import { AiOutlineSortDescending, AiOutlineSortAscending } from 'react-icons/ai'
-import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
+import { BsChevronLeft, BsChevronRight, BsSearch } from 'react-icons/bs'
 import ProductCardSkeleton from './product-card-skeleton';
 import { useCustomSearch } from '~/hooks/useCustomSearch';
 import { MdLayersClear } from 'react-icons/md'
@@ -85,6 +85,21 @@ const ProductList = () => {
     store: stores,
     search: search
   })
+  const [searchInput, setInputSearch] = React.useState("")
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      setInputSearch("")
+      router.push(`?${new URLSearchParams({
+        search: searchInput,
+        sort: sort,
+        genders: genders.filter(f => f.length !== 0).join("|"),
+        prices: prices,
+        stores: stores.filter(f => f.length !== 0).join("|"),
+        page: page.toString()
+      }).toString()}`)
+    }
+  }
 
   const pageTotal = totalItems?.data ? Math.ceil(totalItems?.data / itemsPerPage) : 0
   const perfums = api.perfum.getAll.useQuery({
@@ -121,9 +136,16 @@ const ProductList = () => {
       s = _search
     }
 
+    let so = ""
+    if (_sort === undefined) {
+      so = sort
+    } else {
+      so = _sort
+    }
+
     const searchParams = new URLSearchParams({
       search: s,
-      sort: (_sort ?? sort),
+      sort: so,
       genders: (_genders ?? genders).filter(f => f.length !== 0).join("|"),
       prices: (_prices ?? prices) || "",
       stores: (_stores ?? stores).filter(f => f.length !== 0).join("|"),
@@ -192,26 +214,45 @@ const ProductList = () => {
         </Accordion>
       </div>
       <div className='flex flex-col gap-5 w-full'>
-        <div className='flex flex-col sm:flex-row justify-center gap-2 ' >
-          <Select
-            size='sm'
-            placeholder='Sort by'
-            variant='underlined'
-            radius='none'
-            startContent={sort === "ASC" ? <AiOutlineSortAscending /> : <AiOutlineSortDescending />}
-            className="sm:max-w-xs"
-            value={sort}
-            onChange={(e) => handleStateChange({ _sort: e.target.value })}
-            onSelectionChange={(e) => console.log(e)}
+        <div className='flex flex-col sm:flex-row justify-center gap-2 items-end' >
 
-          >
-            <SelectItem key="ASC" value="ASC">
-              Price: Low to High
-            </SelectItem>
-            <SelectItem key="DESC" value="DESC">
-              Price: High to Low
-            </SelectItem>
-          </Select>
+          <div className='w-full flex flex-col gap-2'>
+            <Input
+              classNames={{
+                base: "sm:max-w-xs h-10",
+                mainWrapper: "h-full",
+                input: "text-small",
+                inputWrapper: "h-full font-normal text-default-500 ",
+              }}
+              placeholder="Type to search..."
+              size="sm"
+              variant='underlined'
+              startContent={<BsSearch size={18} />}
+              type="search"
+              value={searchInput}
+              onChange={(e) => setInputSearch(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <Select
+              size='sm'
+              placeholder='Sort by'
+              variant='underlined'
+              radius='none'
+              startContent={sort === "ASC" ? <AiOutlineSortAscending /> : <AiOutlineSortDescending />}
+              className="sm:max-w-xs"
+              value={sort}
+              onChange={(e) => handleStateChange({ _sort: e.target.value })}
+              onSelectionChange={(e) => console.log(e)}
+
+            >
+              <SelectItem key="ASC" value="ASC">
+                Price: Low to High
+              </SelectItem>
+              <SelectItem key="DESC" value="DESC">
+                Price: High to Low
+              </SelectItem>
+            </Select>
+          </div>
           <Pagination page={page} pageTotal={pageTotal} perfums={perfums.data} perfumsIsLoading={perfums.isLoading} handleStateChange={handleStateChange} />
         </div>
         {
