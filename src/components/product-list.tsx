@@ -125,7 +125,7 @@ const ProductList = () => {
         </Accordion>
       </div>
       <div className='flex flex-col gap-5 w-full'>
-        <div className='flex flex-row justify-center' >
+        <div className='flex flex-col sm:flex-row justify-center gap-2 ' >
           <Select
             size='sm'
             placeholder='Sort by'

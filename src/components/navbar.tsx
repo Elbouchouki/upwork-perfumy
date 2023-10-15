@@ -61,7 +61,7 @@ const Navbar = () => {
 
       <NavbarContent className='gap-4' justify="end">
 
-        <div className='hidden sm:flex gap-4 items-center'>
+        <div className=' gap-4 items-center'>
           <Input
             classNames={{
               base: "max-w-full sm:max-w-xl h-10",
