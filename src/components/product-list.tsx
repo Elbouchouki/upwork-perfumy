@@ -139,7 +139,7 @@ const ProductList = () => {
             variant='underlined'
             radius='none'
             startContent={sort === "ASC" ? <AiOutlineSortAscending /> : <AiOutlineSortDescending />}
-            className="max-w-xs"
+            className="sm:max-w-xs"
             value={sort}
             onChange={(e) => handleStateChange({ _sort: e.target.value })}
             onSelectionChange={(e) => console.log(e)}
