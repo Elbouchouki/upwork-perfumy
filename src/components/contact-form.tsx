@@ -13,9 +13,13 @@ const ContactForm = () => {
 
   const mutation = api.mail.sendEmail.useMutation();
   const FormSchema = z.object({
-    name: z.string().min(3, "Name must be at least 3 characters long. Please enter a valid name."),
-    email: z.string().email("Invalid email address."),
-    message: z.string().min(10, "Message must be at least 10 characters long. Please enter a valid message.")
+    name: z.string({
+      required_error: "Name is required."
+    }),
+    email: z.string().email({ message: "Invalid email address" }),
+    message: z.string({
+      required_error: "Message is required."
+    })
   })
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -97,7 +101,9 @@ const ContactForm = () => {
                 <FormControl>
                   <Textarea
                     rows={5}
-                    placeholder="e.g I want to add my store to your website" />
+                    placeholder="e.g I want to add my store to your website"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

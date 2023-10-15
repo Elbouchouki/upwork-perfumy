@@ -1,5 +1,7 @@
 import Head from 'next/head'
 import React from 'react'
+import About from '~/components/about'
+import Footer from '~/components/footer'
 import Navbar from '~/components/navbar'
 
 const AboutPage = () => {
@@ -13,7 +15,8 @@ const AboutPage = () => {
       </Head>
       <main className="min-h-screen flex flex-col " >
         <Navbar />
-        About
+        <About />
+        <Footer />
       </main>
     </>
   )

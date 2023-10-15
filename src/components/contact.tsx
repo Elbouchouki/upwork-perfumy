@@ -16,7 +16,7 @@ const Contact = () => {
           <ContactForm />
         </div>
         <div className="w-full text-xs md:max-w-lg text-muted-foreground">
-          Check out FQA page, maybe you will find your answer there. If not, please submit your question/bug/issue above.
+          If you prefer to call us, you can reach us on <Link href="tel:+614 8888 8888" className='font-semibold'>+614 8888 8888</Link>.
         </div>
       </div>
     </div>
