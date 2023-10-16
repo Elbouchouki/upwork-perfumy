@@ -21,10 +21,14 @@ export const perfumRouter = createTRPCRouter({
     const stores = input.store?.filter((store) => store !== "") ?? [];
     const where: Prisma.PerfumWhereInput = {};
 
-    if (input.search) {
-      where.title = {
-        contains: input.search
-      }
+    const keywords = input.search?.split(" ") ?? [];
+
+    if (keywords.length > 0) {
+      where.AND = keywords.map((keyword) => ({
+        title: {
+          contains: keyword
+        }
+      }))
     }
 
     if (prices.length > 0) {
@@ -77,10 +81,14 @@ export const perfumRouter = createTRPCRouter({
     const stores = input.store?.filter((store) => store !== "") ?? [];
     const where: Prisma.PerfumWhereInput = {};
 
-    if (input.search) {
-      where.title = {
-        contains: input.search
-      }
+    const keywords = input.search?.split(" ") ?? [];
+
+    if (keywords.length > 0) {
+      where.AND = keywords.map((keyword) => ({
+        title: {
+          contains: keyword
+        }
+      }))
     }
 
     if (prices.length > 0) {
